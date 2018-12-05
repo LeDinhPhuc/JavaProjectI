@@ -20,6 +20,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Vector;
@@ -27,6 +28,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -83,8 +85,8 @@ public class Supplier extends javax.swing.JPanel {
         insertData = new javax.swing.JButton();
         jToolBar6 = new javax.swing.JToolBar();
         jButton7 = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        searchBox = new javax.swing.JTextField();
+        properties = new javax.swing.JComboBox<>();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -187,9 +189,19 @@ public class Supplier extends javax.swing.JPanel {
         });
         jToolBar6.add(jButton7);
 
-        jTextField1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        searchBox.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        searchBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchBoxActionPerformed(evt);
+            }
+        });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        properties.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Chọn", "Mã nhà cung cấp", "Tên nhà cung cấp", "Địa chỉ" }));
+        properties.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                propertiesActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -204,9 +216,9 @@ public class Supplier extends javax.swing.JPanel {
                         .addGap(18, 18, 18)
                         .addComponent(jToolBar6, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(29, 29, 29)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(searchBox, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(properties, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 12, Short.MAX_VALUE)
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 1186, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -216,13 +228,17 @@ public class Supplier extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jToolBar4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jToolBar5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jToolBar6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jToolBar4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jToolBar5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jToolBar6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(searchBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(properties, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 594, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -464,6 +480,76 @@ public class Supplier extends javax.swing.JPanel {
             tableSupplier.changeSelection(tableSupplier.getSelectedRow(), 0, false, false);
         }
     }//GEN-LAST:event_tableSupplierKeyPressed
+
+    private void searchBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_searchBoxActionPerformed
+
+    private void propertiesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_propertiesActionPerformed
+        // TODO add your handling code here:
+        JComboBox<String> combo = (JComboBox<String>) evt.getSource();
+        String selected = (String) combo.getSelectedItem();
+        ConnectionDB connectionDB = new ConnectionDB();
+        Connection con = connectionDB.getConnect();
+        if (selected != null) {
+            switch (selected) {
+                case "Mã nhà cung cấp":
+                try {
+                    ((DefaultTableModel) tableSupplier.getModel()).setNumRows(0);
+                    String sql = "SELECT * FROM quanlybangiay.nhacungcap WHERE maNCC like '%" + searchBox.getText() + "%'";
+                    Statement st = con.createStatement();
+                    ResultSet rs = st.executeQuery(sql);
+                    while (rs.next()) {
+                        Vector<String> vector = new Vector<>();
+                        for (int i = 0; i < 3; i++) {
+                            vector.add(rs.getString(i + 1));
+                        }
+                        ((DefaultTableModel) tableSupplier.getModel()).addRow(vector);
+                    }
+                    System.out.println("done");
+                } catch (SQLException ex) {
+                    Logger.getLogger(Employee.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                break;
+                case "Tên nhà cung cấp":
+                try {
+                    ((DefaultTableModel) tableSupplier.getModel()).setNumRows(0);
+                    String sql = "select * from quanlybangiay.nhacungcap where tenNCC like '%" + searchBox.getText() + "%'";
+                    Statement st = con.createStatement();
+                    ResultSet rs = st.executeQuery(sql);
+
+                    while (rs.next()) {
+                        Vector<String> vector = new Vector<>();
+                        for (int i = 0; i < 3; i++) {
+                            vector.add(rs.getString(i + 1));
+                        }
+                        ((DefaultTableModel) tableSupplier.getModel()).addRow(vector);
+                    }
+                } catch (Exception e) {
+                }
+                break;
+                case "Địa chỉ":
+                try {
+                    ((DefaultTableModel) tableSupplier.getModel()).setNumRows(0);
+                    String sql = "select * from quanlybangiay.nhacungcap where diaChi like '%" + searchBox.getText() + "%'";
+                    Statement st = con.createStatement();
+                    ResultSet rs = st.executeQuery(sql);
+
+                    while (rs.next()) {
+                        Vector<String> vector = new Vector<>();
+                        for (int i = 0; i < 3; i++) {
+                            vector.add(rs.getString(i + 1));
+                        }
+                        ((DefaultTableModel) tableSupplier.getModel()).addRow(vector);
+                    }
+                } catch (Exception e) {
+                }
+                break;
+                
+
+            }
+        }
+    }//GEN-LAST:event_propertiesActionPerformed
     private JPopupMenu popUp() {
         JPopupMenu popupMenu = new JPopupMenu();
         JMenu deleteMenu = new JMenu("Delete");
@@ -639,12 +725,12 @@ public class Supplier extends javax.swing.JPanel {
     private javax.swing.JButton importFile;
     private javax.swing.JButton insertData;
     private javax.swing.JButton jButton7;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JToolBar jToolBar4;
     private javax.swing.JToolBar jToolBar5;
     private javax.swing.JToolBar jToolBar6;
+    private javax.swing.JComboBox<String> properties;
+    private javax.swing.JTextField searchBox;
     public javax.swing.JTable tableSupplier;
     private javax.swing.JButton viewData;
     // End of variables declaration//GEN-END:variables

@@ -20,6 +20,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Vector;
@@ -27,6 +28,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -53,7 +55,9 @@ import org.apache.poi.xwpf.usermodel.XWPFTableRow;
  * @author Pham Ngoc Minh
  */
 public class Customer extends javax.swing.JPanel {
+
     public boolean[] inserted = new boolean[100000];
+
     /**
      * Creates new form Panel1
      */
@@ -81,8 +85,8 @@ public class Customer extends javax.swing.JPanel {
         jButton6 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableCustomer = new javax.swing.JTable();
-        jTextField1 = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        searchBox = new javax.swing.JTextField();
+        properties = new javax.swing.JComboBox<>();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -189,9 +193,19 @@ public class Customer extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(tableCustomer);
 
-        jTextField1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        searchBox.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        searchBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchBoxActionPerformed(evt);
+            }
+        });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        properties.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Chọn", "Mã khách hàng", "Họ tên", "Địa chỉ", "Điện thoại" }));
+        properties.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                propertiesActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -205,26 +219,26 @@ public class Customer extends javax.swing.JPanel {
                         .addComponent(jToolBar2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jToolBar3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 220, Short.MAX_VALUE)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(29, 29, 29)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(searchBox, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(properties, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jScrollPane1)))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1044, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(searchBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(properties, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jToolBar2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jToolBar3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jToolBar3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 487, Short.MAX_VALUE))
         );
@@ -234,7 +248,7 @@ public class Customer extends javax.swing.JPanel {
         // TODO add your handling code here:
         try {
             // mở file word, trong đó file word trích đường dẫn như ví dụ bên dưới
-            FileInputStream fis = new FileInputStream(System.getProperty("user.home")+"\\Desktop\\TestWord.docx");
+            FileInputStream fis = new FileInputStream(System.getProperty("user.home") + "\\Desktop\\TestWord.docx");
             XWPFDocument xdoc = new XWPFDocument(OPCPackage.open(fis));
             // con trỏ duyệt phần thân của file word
             Iterator bodyElementIterator = xdoc.getBodyElementsIterator();
@@ -259,7 +273,7 @@ public class Customer extends javax.swing.JPanel {
                     }
                 }
             }
-            OutputStream out = new FileOutputStream(System.getProperty("user.home")+"\\Desktop\\TestWord.docx");
+            OutputStream out = new FileOutputStream(System.getProperty("user.home") + "\\Desktop\\TestWord.docx");
             xdoc.write(out);
             out.close();
 
@@ -269,7 +283,7 @@ public class Customer extends javax.swing.JPanel {
         if (dialogResult == JOptionPane.YES_OPTION) {
             if (Desktop.isDesktopSupported()) {
                 try {
-                    File myFile = new File(System.getProperty("user.home")+"\\Desktop\\TestWord.docx");
+                    File myFile = new File(System.getProperty("user.home") + "\\Desktop\\TestWord.docx");
                     Desktop.getDesktop().open(myFile);
                 } catch (IOException ex) {
                     // no application registered for PDFs
@@ -300,8 +314,7 @@ public class Customer extends javax.swing.JPanel {
                     pst.setString(6, tableCustomer.getValueAt(row, 5).toString());
                     pst.setString(7, tableCustomer.getValueAt(row, 6).toString());
                     pst.setString(8, tableCustomer.getValueAt(row, 7).toString());
-                   
-                    
+
                     pst.addBatch();
                     pst.executeUpdate();
                     connection.commit();
@@ -313,7 +326,7 @@ public class Customer extends javax.swing.JPanel {
             }
         }
         JOptionPane.showMessageDialog(null, "Successfully");
-        
+
     }//GEN-LAST:event_insertDataActionPerformed
 
     private void importFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_importFileActionPerformed
@@ -332,7 +345,7 @@ public class Customer extends javax.swing.JPanel {
             return;
         }
         // chỗ này sẽ delete hết các dòng trước khi nhập dữ liệu từ file 
-        
+
         // vector lưu tên cột
         Vector columns = new Vector();
         try {
@@ -410,7 +423,7 @@ public class Customer extends javax.swing.JPanel {
     }//GEN-LAST:event_tableCustomerMouseReleased
 
     private void viewDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewDataActionPerformed
-         // TODO add your handling code here:
+        // TODO add your handling code here:
         ConnectionDB connectDB = new ConnectionDB();
         Connection connection = connectDB.getConnect();
         DefaultTableModel tableModel = (DefaultTableModel) tableCustomer.getModel();
@@ -437,11 +450,11 @@ public class Customer extends javax.swing.JPanel {
     private void clearDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearDataActionPerformed
         // TODO add your handling code here:
         int dialog = JOptionPane.showConfirmDialog(null, "Hành động này sẽ xoá toàn bộ dữ liệu \nBạn có muốn tiếp tục không?\nTip: Nếu bạn không chắc chắn, hãy kiểm tra lại hoặc xoá lần lượt từng hàng một!", "Cảnh báo", JOptionPane.INFORMATION_MESSAGE);
-        
-        if(dialog == JOptionPane.YES_OPTION) {
+
+        if (dialog == JOptionPane.YES_OPTION) {
             ConnectionDB connectionDB = new ConnectionDB();
             Connection con = connectionDB.getConnect();
-            
+
             String sql = "deletle from quanlybangiay.nhavien";
             try {
                 con.setAutoCommit(false);
@@ -467,6 +480,90 @@ public class Customer extends javax.swing.JPanel {
             tableCustomer.changeSelection(tableCustomer.getSelectedRow(), 0, false, false);
         }
     }//GEN-LAST:event_tableCustomerKeyPressed
+
+    private void searchBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_searchBoxActionPerformed
+
+    private void propertiesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_propertiesActionPerformed
+        // TODO add your handling code here:
+        JComboBox<String> combo = (JComboBox<String>) evt.getSource();
+        String selected = (String) combo.getSelectedItem();
+        ConnectionDB connectionDB = new ConnectionDB();
+        Connection con = connectionDB.getConnect();
+        if (selected != null) {
+            switch (selected) {
+                case "Mã khách hàng":
+                    try {
+                        ((DefaultTableModel) tableCustomer.getModel()).setNumRows(0);
+                        String sql = "SELECT * FROM quanlybangiay.khachhang WHERE maKH like '%" + searchBox.getText() +  "%'";
+                        Statement st = con.createStatement();
+                        ResultSet rs = st.executeQuery(sql);
+                        while (rs.next()) {
+                            Vector<String> vector = new Vector<>();
+                            for (int i = 0; i < 8; i++) {
+                                vector.add(rs.getString(i + 1));
+                            }
+                            ((DefaultTableModel) tableCustomer.getModel()).addRow(vector);
+                        }
+                        System.out.println("done");
+                    } catch (SQLException ex) {
+                        Logger.getLogger(Employee.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    break;
+                case "Họ tên":
+                    try {
+                        ((DefaultTableModel) tableCustomer.getModel()).setNumRows(0);
+                        String sql = "select * from quanlybangiay.khachhang where hoTen like '%" + searchBox.getText() +  "%'";
+                        Statement st = con.createStatement();
+                        ResultSet rs = st.executeQuery(sql);
+                        Vector<String> vector = new Vector<>();
+                        while (rs.next()) {
+                            for (int i = 0; i < 8; i++) {
+                                vector.add(rs.getString(i + 1));
+                            }
+                            ((DefaultTableModel) tableCustomer.getModel()).addRow(vector);
+                        }
+                    } catch (Exception e) {
+                    }
+                    break;
+                case "Địa chỉ":
+                    try {
+                        ((DefaultTableModel) tableCustomer.getModel()).setNumRows(0);
+                        String sql = "select * from quanlybangiay.khachhang where diaChi like '%" + searchBox.getText() +  "%'";
+                        Statement st = con.createStatement();
+                        ResultSet rs = st.executeQuery(sql);
+                        Vector<String> vector = new Vector<>();
+                        while (rs.next()) {
+                            for (int i = 0; i < 8; i++) {
+                                vector.add(rs.getString(i + 1));
+                            }
+                            ((DefaultTableModel) tableCustomer.getModel()).addRow(vector);
+                        }
+                    } catch (Exception e) {
+                    }
+                    break;
+                case "Điện thoại":
+                    try {
+                        ((DefaultTableModel) tableCustomer.getModel()).setNumRows(0);
+                        String sql = "select * from quanlybangiay.khachhang where dienThoai like '%" + searchBox.getText() +  "%'";
+                        Statement st = con.createStatement();
+                        ResultSet rs = st.executeQuery(sql);
+                        Vector<String> vector = new Vector<>();
+                        while (rs.next()) {
+                            for (int i = 0; i < 8; i++) {
+                                vector.add(rs.getString(i + 1));
+                            }
+                            ((DefaultTableModel) tableCustomer.getModel()).addRow(vector);
+                        }
+                    } catch (Exception e) {
+                    }
+                    break;
+
+            }
+        }
+
+    }//GEN-LAST:event_propertiesActionPerformed
 
     private JPopupMenu popUp() {
         JPopupMenu popupMenu = new JPopupMenu();
@@ -519,9 +616,9 @@ public class Customer extends javax.swing.JPanel {
                     } catch (HeadlessException | SQLException ex) {
                         JOptionPane.showMessageDialog(null, "Can not delele!\n" + ex.getMessage());
                     }
-                    
+
                 }
-                
+
             }
         });
         deleteFromTb.addMouseListener(new MouseAdapter() {
@@ -571,7 +668,7 @@ public class Customer extends javax.swing.JPanel {
                         pst.setString(6, tableModel.getValueAt(row, 5).toString());
                         pst.setString(7, tableModel.getValueAt(row, 6).toString());
                         pst.setString(8, tableModel.getValueAt(row, 7).toString());
-                   
+
                         pst.addBatch();
                         pst.executeUpdate();
                         connection.commit();
@@ -580,7 +677,7 @@ public class Customer extends javax.swing.JPanel {
                         JOptionPane.showMessageDialog(null, "Can not update!\n" + ex.getMessage());
                     }
                 }
-                
+
             }
         });
         insertAbove.addMouseListener(new MouseAdapter() {
@@ -609,7 +706,7 @@ public class Customer extends javax.swing.JPanel {
         return popupMenu;
 
     }
-    
+
     private boolean isEmptyRow(int row) {
         DefaultTableModel tableModel = (DefaultTableModel) tableCustomer.getModel();
         for (int i = 0; i < tableCustomer.getColumnCount(); i++) {
@@ -620,7 +717,7 @@ public class Customer extends javax.swing.JPanel {
         }
         return false;
     }
-    
+
     private void addRowData(XWPFTable table, int lastRowPosition) {
         for (int i = lastRowPosition - 1; i < tableCustomer.getRowCount(); i++) {
             XWPFTableRow newRow = table.createRow();
@@ -637,25 +734,25 @@ public class Customer extends javax.swing.JPanel {
             tableCell.removeParagraph(i);
         }
     }
-    
+
     private void setDefaultTable(XWPFTable table) {
         for (int i = 1; i < table.getRows().size(); i++) {
             table.removeRow(1);
         }
     }
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton clearData;
     private javax.swing.JButton exportFile;
     private javax.swing.JButton importFile;
     private javax.swing.JButton insertData;
     private javax.swing.JButton jButton6;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JToolBar jToolBar2;
     private javax.swing.JToolBar jToolBar3;
+    private javax.swing.JComboBox<String> properties;
+    private javax.swing.JTextField searchBox;
     public javax.swing.JTable tableCustomer;
     private javax.swing.JButton viewData;
     // End of variables declaration//GEN-END:variables

@@ -25,89 +25,92 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
-              <Component id="jToolBar4" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="jToolBar5" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
-              <Component id="jToolBar1" min="-2" pref="150" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="jToolBar2" min="-2" pref="163" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="jButton7" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
-              <Component id="jToolBar6" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="141" max="32767" attributes="0"/>
-              <Component id="search" min="-2" pref="210" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="jComboBox1" min="-2" pref="212" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-          </Group>
-          <Group type="102" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                          <Component id="jLabel21" max="32767" attributes="0"/>
-                          <Component id="jLabel20" max="32767" attributes="0"/>
-                          <Component id="jLabel18" max="32767" attributes="0"/>
-                          <Component id="jLabel1" max="32767" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="createDay" linkSize="1" pref="250" max="32767" attributes="0"/>
-                          <Component id="exportInvoice" min="-2" pref="250" max="-2" attributes="0"/>
-                          <Component id="employeeName" min="-2" pref="250" max="-2" attributes="0"/>
-                          <Component id="employeeCombo" alignment="0" min="-2" pref="90" max="-2" attributes="0"/>
-                      </Group>
-                  </Group>
-                  <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="jLabel28" max="32767" attributes="0"/>
-                          <Component id="jLabel85" max="32767" attributes="0"/>
-                          <Component id="jLabel89" max="32767" attributes="0"/>
-                          <Component id="jLabel23" max="32767" attributes="0"/>
-                          <Component id="jLabel24" alignment="0" max="32767" attributes="0"/>
-                          <Component id="jLabel86" alignment="0" max="32767" attributes="0"/>
-                          <Component id="jLabel87" alignment="0" max="32767" attributes="0"/>
-                          <Component id="jLabel4" max="32767" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="exportDay" linkSize="1" pref="250" max="32767" attributes="0"/>
-                          <Component id="productName" alignment="0" max="32767" attributes="0"/>
-                          <Component id="quantity" linkSize="1" alignment="1" max="32767" attributes="0"/>
-                          <Component id="cost" linkSize="1" alignment="1" max="32767" attributes="0"/>
-                          <Component id="customerName" alignment="0" max="32767" attributes="0"/>
-                          <Component id="lbExportInvoice" min="-2" pref="250" max="-2" attributes="0"/>
-                          <Component id="productCombo" alignment="0" min="-2" pref="90" max="-2" attributes="0"/>
-                          <Component id="customerID" alignment="0" min="-2" pref="90" max="-2" attributes="0"/>
-                      </Group>
-                  </Group>
-                  <Component id="jLabel5" alignment="0" max="32767" attributes="0"/>
-              </Group>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jScrollPane5" max="32767" attributes="0"/>
-                  <Component id="jScrollPane6" max="32767" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <Component id="jToolBar4" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="jToolBar5" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="jToolBar6" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                  <Component id="jLabel21" max="32767" attributes="0"/>
+                                  <Component id="jLabel20" max="32767" attributes="0"/>
+                                  <Component id="jLabel18" max="32767" attributes="0"/>
+                                  <Component id="jLabel1" max="32767" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="employeeCombo" min="-2" pref="74" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="1" attributes="0">
+                                      <Component id="createDay" linkSize="1" pref="250" max="32767" attributes="0"/>
+                                      <Component id="exportInvoice" min="-2" pref="250" max="-2" attributes="0"/>
+                                      <Component id="employeeName" min="-2" pref="250" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                          </Group>
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="jLabel28" max="32767" attributes="0"/>
+                                  <Component id="jLabel85" max="32767" attributes="0"/>
+                                  <Component id="jLabel89" max="32767" attributes="0"/>
+                                  <Component id="jLabel23" max="32767" attributes="0"/>
+                                  <Component id="jLabel24" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="jLabel86" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="jLabel87" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="jLabel4" max="32767" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="exportDay" linkSize="1" pref="250" max="32767" attributes="0"/>
+                                  <Component id="productName" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="quantity" linkSize="1" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="cost" linkSize="1" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="customerID" alignment="0" min="-2" pref="76" max="-2" attributes="0"/>
+                                  <Component id="customerName" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="productCombo" alignment="0" min="-2" pref="75" max="-2" attributes="0"/>
+                                  <Component id="lbExportInvoice" min="-2" pref="250" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <Component id="jLabel5" alignment="0" max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
               </Group>
-              <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jScrollPane6" pref="676" max="32767" attributes="0"/>
+                          <Component id="jScrollPane5" pref="676" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="1" attributes="0">
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="jTextField1" min="-2" pref="200" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
+                      <Component id="jComboBox1" min="-2" pref="200" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                  </Group>
+              </Group>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="jToolBar5" alignment="1" max="32767" attributes="0"/>
-                  <Component id="jToolBar4" alignment="1" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="jToolBar5" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="jToolBar4" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="jToolBar6" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Group type="103" alignment="1" groupAlignment="3" attributes="0">
-                      <Component id="search" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
+                      <Component id="jTextField1" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
                       <Component id="jComboBox1" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="jButton7" alignment="1" max="32767" attributes="0"/>
-                  <Component id="jToolBar1" alignment="1" max="32767" attributes="0"/>
-                  <Component id="jToolBar2" max="32767" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -180,7 +183,7 @@
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
-                  <Component id="jScrollPane5" pref="319" max="32767" attributes="0"/>
+                  <Component id="jScrollPane5" max="32767" attributes="0"/>
               </Group>
           </Group>
       </Group>
@@ -487,11 +490,26 @@
     </Container>
     <Container class="javax.swing.JToolBar" name="jToolBar4">
       <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="ff" green="ff" red="ff" type="rgb"/>
+        </Property>
         <Property name="rollover" type="boolean" value="true"/>
       </Properties>
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBoxLayout"/>
       <SubComponents>
+        <Component class="javax.swing.JButton" name="importFile">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/shoesmanagementcompany/IconColor/icons8_Microsoft_Excel_37px.png"/>
+            </Property>
+            <Property name="toolTipText" type="java.lang.String" value="Nh&#x1ead;p file"/>
+            <Property name="opaque" type="boolean" value="false"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="importFileActionPerformed"/>
+          </Events>
+        </Component>
         <Component class="javax.swing.JButton" name="exportFile">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
@@ -508,6 +526,9 @@
     </Container>
     <Container class="javax.swing.JToolBar" name="jToolBar5">
       <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="ff" green="ff" red="ff" type="rgb"/>
+        </Property>
         <Property name="rollover" type="boolean" value="true"/>
       </Properties>
 
@@ -516,13 +537,40 @@
         <Component class="javax.swing.JButton" name="viewData">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/shoesmanagementcompany/Icon/reset.png"/>
+              <Image iconType="3" name="/shoesmanagementcompany/IconColor/icons8_Database_View_37px.png"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" value="Hi&#x1ec3;n th&#x1ecb; "/>
             <Property name="opaque" type="boolean" value="false"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="viewDataActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="clearData">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/shoesmanagementcompany/IconColor/icons8_Delete_Database_37px.png"/>
+            </Property>
+            <Property name="toolTipText" type="java.lang.String" value="Xo&#xe1; b&#x1ea3;ng"/>
+            <Property name="focusable" type="boolean" value="false"/>
+            <Property name="horizontalTextPosition" type="int" value="0"/>
+            <Property name="opaque" type="boolean" value="false"/>
+            <Property name="verticalTextPosition" type="int" value="3"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="clearDataActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="insertData">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/shoesmanagementcompany/IconColor/icons8_Add_Database_37px.png"/>
+            </Property>
+            <Property name="toolTipText" type="java.lang.String" value="Th&#xea;m"/>
+            <Property name="opaque" type="boolean" value="false"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="insertDataActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>
@@ -536,6 +584,20 @@
       </Properties>
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBoxLayout"/>
+      <SubComponents>
+        <Component class="javax.swing.JButton" name="jButton7">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/shoesmanagementcompany/IconColor/icons8_Combo_Chart_37px.png"/>
+            </Property>
+            <Property name="toolTipText" type="java.lang.String" value="Th&#x1ed1;ng k&#xea;"/>
+            <Property name="opaque" type="boolean" value="false"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton7ActionPerformed"/>
+          </Events>
+        </Component>
+      </SubComponents>
     </Container>
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
@@ -594,7 +656,7 @@
         <Property name="text" type="java.lang.String" value="M&#xe3; h&#xf3;a &#x111;&#x1a1;n xu&#x1ea5;t"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="search">
+    <Component class="javax.swing.JTextField" name="jTextField1">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Tahoma" size="14" style="0"/>
@@ -603,16 +665,12 @@
     </Component>
     <Component class="javax.swing.JComboBox" name="jComboBox1">
       <Properties>
-        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Segoe UI" size="14" style="0"/>
-        </Property>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="5">
-            <StringItem index="0" value="TK theo m&#xe3; h&#xf3;a &#x111;&#x1a1;n xu&#x1ea5;t"/>
-            <StringItem index="1" value="TK theo m&#xe3; kh&#xe1;ch h&#xe0;ng"/>
-            <StringItem index="2" value="TK theo m&#xe3; nh&#xe2;n vi&#xea;n"/>
-            <StringItem index="3" value="TK theo m&#xe3; s&#x1ea3;n ph&#x1ea9;m"/>
-            <StringItem index="4" value="TK theo ng&#xe0;y xu&#x1ea5;t h&#xe0;ng"/>
+          <StringArray count="4">
+            <StringItem index="0" value="Item 1"/>
+            <StringItem index="1" value="Item 2"/>
+            <StringItem index="2" value="Item 3"/>
+            <StringItem index="3" value="Item 4"/>
           </StringArray>
         </Property>
       </Properties>
@@ -620,105 +678,5 @@
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
       </AuxValues>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton7">
-      <Properties>
-        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/shoesmanagementcompany/IconColor/icons8_Combo_Chart_37px.png"/>
-        </Property>
-        <Property name="toolTipText" type="java.lang.String" value="Th&#x1ed1;ng k&#xea;"/>
-        <Property name="opaque" type="boolean" value="false"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton7ActionPerformed"/>
-      </Events>
-    </Component>
-    <Container class="javax.swing.JToolBar" name="jToolBar1">
-      <Properties>
-        <Property name="rollover" type="boolean" value="true"/>
-      </Properties>
-
-      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBoxLayout"/>
-      <SubComponents>
-        <Component class="javax.swing.JButton" name="insertData">
-          <Properties>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/shoesmanagementcompany/IconColor/icons8_Add_Database_37px.png"/>
-            </Property>
-            <Property name="toolTipText" type="java.lang.String" value="Th&#xea;m"/>
-            <Property name="opaque" type="boolean" value="false"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="insertDataActionPerformed"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JButton" name="jButton1">
-          <Properties>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/shoesmanagementcompany/Icon/edit 37.1.png"/>
-            </Property>
-            <Property name="focusable" type="boolean" value="false"/>
-            <Property name="horizontalTextPosition" type="int" value="0"/>
-            <Property name="verticalTextPosition" type="int" value="3"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JButton" name="clearData">
-          <Properties>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/shoesmanagementcompany/IconColor/icons8_Delete_Database_37px.png"/>
-            </Property>
-            <Property name="toolTipText" type="java.lang.String" value="Xo&#xe1; b&#x1ea3;ng"/>
-            <Property name="focusable" type="boolean" value="false"/>
-            <Property name="horizontalTextPosition" type="int" value="0"/>
-            <Property name="opaque" type="boolean" value="false"/>
-            <Property name="verticalTextPosition" type="int" value="3"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="clearDataActionPerformed"/>
-          </Events>
-        </Component>
-      </SubComponents>
-    </Container>
-    <Container class="javax.swing.JToolBar" name="jToolBar2">
-      <Properties>
-        <Property name="rollover" type="boolean" value="true"/>
-      </Properties>
-
-      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBoxLayout"/>
-      <SubComponents>
-        <Component class="javax.swing.JButton" name="jButton2">
-          <Properties>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/shoesmanagementcompany/Icon/insert 37.2.png"/>
-            </Property>
-            <Property name="focusable" type="boolean" value="false"/>
-            <Property name="horizontalTextPosition" type="int" value="0"/>
-            <Property name="verticalTextPosition" type="int" value="3"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JButton" name="jButton3">
-          <Properties>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/shoesmanagementcompany/Icon/edit 37.2.png"/>
-            </Property>
-            <Property name="focusable" type="boolean" value="false"/>
-            <Property name="horizontalTextPosition" type="int" value="0"/>
-            <Property name="verticalTextPosition" type="int" value="3"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JButton" name="jButton4">
-          <Properties>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/shoesmanagementcompany/Icon/remove 37.2.png"/>
-            </Property>
-            <Property name="focusable" type="boolean" value="false"/>
-            <Property name="horizontalTextPosition" type="int" value="0"/>
-            <Property name="verticalTextPosition" type="int" value="3"/>
-          </Properties>
-        </Component>
-      </SubComponents>
-    </Container>
   </SubComponents>
 </Form>

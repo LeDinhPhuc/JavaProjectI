@@ -20,6 +20,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Vector;
@@ -27,6 +28,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -83,8 +85,8 @@ public class Product extends javax.swing.JPanel {
         jButton7 = new javax.swing.JButton();
         jScrollPane9 = new javax.swing.JScrollPane();
         tableProduct = new javax.swing.JTable();
-        jTextField1 = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        searchBox = new javax.swing.JTextField();
+        properties = new javax.swing.JComboBox<>();
 
         jToolBar4.setBackground(new java.awt.Color(255, 255, 255));
         jToolBar4.setRollover(true);
@@ -158,27 +160,19 @@ public class Product extends javax.swing.JPanel {
         tableProduct.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         tableProduct.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Mã sản phẩm", "Tên sản phẩm", "Mã nhà cung cấp", "Nhà sản xuất", "Đơn giá nhập", "Đơn giá xuất", "Thể loại", "Đơn vị tính", "Kích thước", "Màu", "Gender", "Số lượng còn", "Tổng số lượng"
+                "Mã sản phẩm", "Tên sản phẩm", "Mã nhà cung cấp", "Nhà sản xuất", "Đơn giá nhập", "Đơn giá xuất", "Thể loại", "Đơn vị tính", "Kích thước", "Màu", "Sex"
             }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
+        ));
         tableProduct.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
         tableProduct.setRowHeight(25);
         tableProduct.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -193,9 +187,19 @@ public class Product extends javax.swing.JPanel {
         });
         jScrollPane9.setViewportView(tableProduct);
 
-        jTextField1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        searchBox.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        searchBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchBoxActionPerformed(evt);
+            }
+        });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        properties.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Chọn", "Mã sản phẩm", "Tên sản phẩm", "Mã nhà cung cấp", "Ngày nhập", "Nhà sản xuất", "Thể loại", "Kích thước", "Màu", "Sex" }));
+        properties.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                propertiesActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -207,11 +211,14 @@ public class Product extends javax.swing.JPanel {
                 .addComponent(jToolBar5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jToolBar6, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 436, Short.MAX_VALUE)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addComponent(jScrollPane9, javax.swing.GroupLayout.Alignment.TRAILING)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(searchBox, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(properties, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane9, javax.swing.GroupLayout.DEFAULT_SIZE, 1051, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -221,8 +228,8 @@ public class Product extends javax.swing.JPanel {
                     .addComponent(jToolBar4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jToolBar6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(properties, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(searchBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane9, javax.swing.GroupLayout.DEFAULT_SIZE, 553, Short.MAX_VALUE))
         );
@@ -393,7 +400,7 @@ public class Product extends javax.swing.JPanel {
             while (rs.next()) {
                 tableModel.addRow(new Object[]{rs.getString(1), rs.getString(2),
                     rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9),
-                    rs.getString(10), rs.getString(11), rs.getString(12)
+                    rs.getString(10), rs.getString(11), rs.getString(11)
                 });
                 inserted[row] = true;
                 row++;
@@ -435,9 +442,9 @@ public class Product extends javax.swing.JPanel {
         for (int row = 0; row < rows; row++) {
             if (!inserted[row] && !isEmptyRow(row)) {
 //                String sql = "INSERT INTO quanlybangiay.sanpham VALUES (?,?,?,?,?,?,?,?,?,?,?,?);";
-String sql = "INSERT INTO `quanlybangiay`.`sanpham` (`maSP`, `tenSP`, `maNCC`, `ngayNhap`, `nhaSanXuat`, `donGiaNhap`, `donGiaXuat`, `theLoai`, `donViTinh`, `kichThuoc`, `mau`, `sex`) "
-        + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
-                
+                String sql = "INSERT INTO `quanlybangiay`.`sanpham` (`maSP`, `tenSP`, `maNCC`, `ngayNhap`, `nhaSanXuat`, `donGiaNhap`, `donGiaXuat`, `theLoai`, `donViTinh`, `kichThuoc`, `mau`, `sex`) "
+                        + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+
                 try {
                     connection.setAutoCommit(false);
                     PreparedStatement pst = connection.prepareStatement(sql);
@@ -452,7 +459,7 @@ String sql = "INSERT INTO `quanlybangiay`.`sanpham` (`maSP`, `tenSP`, `maNCC`, `
                     pst.setString(9, tableProduct.getValueAt(row, 8).toString());
                     pst.setString(10, tableProduct.getValueAt(row, 9).toString());
                     pst.setString(11, tableProduct.getValueAt(row, 10).toString());
-                    pst.setString(12, tableProduct.getValueAt(row, 11).toString());
+                    pst.setString(11, tableProduct.getValueAt(row, 11).toString());
 
                     pst.addBatch();
                     pst.executeUpdate();
@@ -465,7 +472,7 @@ String sql = "INSERT INTO `quanlybangiay`.`sanpham` (`maSP`, `tenSP`, `maNCC`, `
                 inserted[row] = true;
             }
         }
-        
+
     }//GEN-LAST:event_insertDataActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
@@ -512,6 +519,164 @@ String sql = "INSERT INTO `quanlybangiay`.`sanpham` (`maSP`, `tenSP`, `maNCC`, `
             tableProduct.changeSelection(tableProduct.getSelectedRow(), 0, false, false);
         }
     }//GEN-LAST:event_tableProductKeyPressed
+
+    private void searchBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_searchBoxActionPerformed
+
+    private void propertiesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_propertiesActionPerformed
+        // TODO add your handling code here:
+        JComboBox<String> combo = (JComboBox<String>) evt.getSource();
+        String selected = (String) combo.getSelectedItem();
+        ConnectionDB connectionDB = new ConnectionDB();
+        Connection con = connectionDB.getConnect();
+        if (selected != null) {
+            switch (selected) {
+                case "Mã sản phẩm":
+                    try {
+                        ((DefaultTableModel) tableProduct.getModel()).setNumRows(0);
+                        String sql = "SELECT * FROM quanlybangiay.sanpham WHERE maSP like '%" + searchBox.getText() + "%'";
+                        Statement st = con.createStatement();
+                        ResultSet rs = st.executeQuery(sql);
+                        while (rs.next()) {
+                            Vector<String> vector = new Vector<>();
+                            for (int i = 0; i < 11; i++) {
+                                vector.add(rs.getString(i + 1));
+                            }
+                            ((DefaultTableModel) tableProduct.getModel()).addRow(vector);
+                        }
+                        System.out.println("done");
+                    } catch (SQLException ex) {
+                        Logger.getLogger(Employee.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    break;
+                case "Tên sản phẩm":
+                    try {
+                        ((DefaultTableModel) tableProduct.getModel()).setNumRows(0);
+                        String sql = "select * from quanlybangiay.sanpham where tenSP like '%" + searchBox.getText() + "%'";
+                        Statement st = con.createStatement();
+                        ResultSet rs = st.executeQuery(sql);
+                        
+                        while (rs.next()) {
+                            Vector<String> vector = new Vector<>();
+                            for (int i = 0; i < 11; i++) {
+                                vector.add(rs.getString(i + 1));
+                            }
+                            ((DefaultTableModel) tableProduct.getModel()).addRow(vector);
+                        }
+                    } catch (Exception e) {
+                    }
+                    break;
+                case "Mã nhà cung cấp":
+                    try {
+                        ((DefaultTableModel) tableProduct.getModel()).setNumRows(0);
+                        String sql = "select * from quanlybangiay.sanpham where maNCC like '%" + searchBox.getText() + "%'";
+                        Statement st = con.createStatement();
+                        ResultSet rs = st.executeQuery(sql);
+                        
+                        while (rs.next()) {
+                            Vector<String> vector = new Vector<>();
+                            for (int i = 0; i < 11; i++) {
+                                vector.add(rs.getString(i + 1));
+                            }
+                            ((DefaultTableModel) tableProduct.getModel()).addRow(vector);
+                        }
+                    } catch (Exception e) {
+                    }
+                    break;
+                case "Nhà sản xuất":
+                    try {
+                        ((DefaultTableModel) tableProduct.getModel()).setNumRows(0);
+                        String sql = "select * from quanlybangiay.sanpham where nhaSanXuat like '%" + searchBox.getText() + "%'";
+                        Statement st = con.createStatement();
+                        ResultSet rs = st.executeQuery(sql);
+                        
+                        while (rs.next()) {
+                            Vector<String> vector = new Vector<>();
+                            for (int i = 0; i < 11; i++) {
+                                vector.add(rs.getString(i + 1));
+                            }
+                            ((DefaultTableModel) tableProduct.getModel()).addRow(vector);
+                        }
+                    } catch (Exception e) {
+                    }
+                    break;
+                case "Thể loại":
+                    try {
+                        ((DefaultTableModel) tableProduct.getModel()).setNumRows(0);
+                        String sql = "select * from quanlybangiay.sanpham where theLoai like '%" + searchBox.getText() + "%' group by maSP";
+                        Statement ps = con.prepareStatement(sql);
+                        ResultSet rs = ps.executeQuery(sql);
+                   
+                        while (rs.next()) {
+                             Vector<String> vector = new Vector<>();
+                            for (int i = 0; i < 11; i++) {
+                                vector.add(rs.getString(i + 1));
+                            }
+                            ((DefaultTableModel) tableProduct.getModel()).addRow(vector);
+                        }
+                    } catch (Exception e) {
+                    }
+                    break;
+                case "Kích thước":
+                    try {
+                        ((DefaultTableModel) tableProduct.getModel()).setNumRows(0);
+                        String sql = "select * from quanlybangiay.sanpham where kichThuoc like '%" + searchBox.getText() + "%'";
+                        Statement st = con.createStatement();
+                        ResultSet rs = st.executeQuery(sql);
+                        
+                        while (rs.next()) {
+                            Vector<String> vector = new Vector<>();
+                            for (int i = 0; i < 11; i++) {
+                                vector.add(rs.getString(i + 1));
+                            }
+                            ((DefaultTableModel) tableProduct.getModel()).addRow(vector);
+                        }
+                    } catch (Exception e) {
+                    }
+                    break;
+                case "Màu":
+                    try {
+                        ((DefaultTableModel) tableProduct.getModel()).setNumRows(0);
+                        String sql = "select * from quanlybangiay.sanpham where mau like '%" + searchBox.getText() + "%'";
+                        Statement st = con.createStatement();
+                        ResultSet rs = st.executeQuery(sql);
+                        
+                        while (rs.next()) {
+                            Vector<String> vector = new Vector<>();
+                            for (int i = 0; i < 11; i++) {
+                                vector.add(rs.getString(i + 1));
+                            }
+                            ((DefaultTableModel) tableProduct.getModel()).addRow(vector);
+                        }
+                    } catch (Exception e) {
+                    }
+                    break;
+                case "Sex":
+                    try {
+                        ((DefaultTableModel) tableProduct.getModel()).setNumRows(0);
+                        String sql = "select * from quanlybangiay.sanpham where gender like '%" + searchBox.getText() + "%'";
+                        Statement st = con.createStatement();
+                        ResultSet rs = st.executeQuery(sql);
+                        
+                        while (rs.next()) {
+                            Vector<String> vector = new Vector<>();
+                            for (int i = 0; i < 11; i++) {
+                                
+                                vector.add(rs.getString(i + 1));
+                            }
+                            ((DefaultTableModel) tableProduct.getModel()).addRow(vector);
+                        }
+                    } catch (Exception e) {
+                    }
+                    break;
+                
+                   
+
+            }
+        }
+
+    }//GEN-LAST:event_propertiesActionPerformed
     private JPopupMenu popUp() {
         JPopupMenu popupMenu = new JPopupMenu();
         JMenu deleteMenu = new JMenu("Delete");
@@ -617,7 +782,7 @@ String sql = "INSERT INTO `quanlybangiay`.`sanpham` (`maSP`, `tenSP`, `maNCC`, `
                         pst.setString(9, tableModel.getValueAt(row, 8).toString());
                         pst.setString(10, tableModel.getValueAt(row, 9).toString());
                         pst.setString(11, tableModel.getValueAt(row, 10).toString());
-                        pst.setString(12, tableModel.getValueAt(row, 11).toString());
+                        pst.setString(11, tableModel.getValueAt(row, 11).toString());
 
                         pst.addBatch();
                         pst.executeUpdate();
@@ -664,12 +829,12 @@ String sql = "INSERT INTO `quanlybangiay`.`sanpham` (`maSP`, `tenSP`, `maNCC`, `
     private javax.swing.JButton importFile;
     private javax.swing.JButton insertData;
     private javax.swing.JButton jButton7;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JScrollPane jScrollPane9;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JToolBar jToolBar4;
     private javax.swing.JToolBar jToolBar5;
     private javax.swing.JToolBar jToolBar6;
+    private javax.swing.JComboBox<String> properties;
+    private javax.swing.JTextField searchBox;
     public javax.swing.JTable tableProduct;
     private javax.swing.JButton viewData;
     // End of variables declaration//GEN-END:variables

@@ -30,6 +30,7 @@
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
         </Property>
+        <Property name="toolTipText" type="java.lang.String" value=""/>
         <Property name="inheritsPopupMenu" type="boolean" value="true"/>
       </Properties>
       <AuxValues>
@@ -183,7 +184,7 @@
                   </Group>
                   <EmptySpace pref="32" max="32767" attributes="0"/>
               </Group>
-              <Component id="jLabel4" alignment="0" max="32767" attributes="0"/>
+              <Component id="statistic" alignment="0" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
@@ -206,7 +207,7 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="exp" pref="49" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jLabel4" min="-2" pref="47" max="-2" attributes="0"/>
+                  <Component id="statistic" min="-2" pref="47" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="206" max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -359,22 +360,23 @@
             <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="expMouseExited"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel4">
+        <Component class="javax.swing.JLabel" name="statistic">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="14" style="1"/>
             </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="ff" green="ff" red="ff" type="rgb"/>
+              <Color blue="dd" green="e0" red="de" type="rgb"/>
             </Property>
-            <Property name="horizontalAlignment" type="int" value="2"/>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/shoesmanagementcompany/IconColor/icons8_Combo_Chart_37px.png"/>
+              <Image iconType="3" name="/shoesmanagementcompany/Icon/icons8_Combo_Chart_37px_1.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Th&#x1ed1;ng k&#xea;"/>
           </Properties>
           <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabel4MouseClicked"/>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="statisticMouseClicked"/>
+            <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="statisticMouseEntered"/>
+            <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="statisticMouseExited"/>
           </Events>
         </Component>
       </SubComponents>

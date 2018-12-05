@@ -24,6 +24,7 @@ public class MainFrame extends javax.swing.JFrame {
     public boolean clicked4 = false;
     public boolean clicked5 = false;
     public boolean clicked6 = false;
+    public boolean clicked7 = false;
 
     /**
      * Creates new form MainFrame
@@ -33,6 +34,8 @@ public class MainFrame extends javax.swing.JFrame {
         FrameDragListener frameDragListener = new FrameDragListener(this);
         this.addMouseListener(frameDragListener);
         this.addMouseMotionListener(frameDragListener);
+        this.setTitle("Quản lý bán giày - Nhóm 2 - 20181");
+
     }
 
     /**
@@ -60,12 +63,13 @@ public class MainFrame extends javax.swing.JFrame {
         imp = new javax.swing.JLabel();
         prod = new javax.swing.JLabel();
         exp = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        statistic = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setToolTipText("");
         jPanel1.setInheritsPopupMenu(true);
         jPanel1.setLayout(new java.awt.CardLayout());
         pn0 = new StartPanel();
@@ -278,14 +282,19 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/shoesmanagementcompany/IconColor/icons8_Combo_Chart_37px.png"))); // NOI18N
-        jLabel4.setText("Thống kê");
-        jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
+        statistic.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        statistic.setForeground(new java.awt.Color(222, 224, 221));
+        statistic.setIcon(new javax.swing.ImageIcon(getClass().getResource("/shoesmanagementcompany/Icon/icons8_Combo_Chart_37px_1.png"))); // NOI18N
+        statistic.setText("Thống kê");
+        statistic.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel4MouseClicked(evt);
+                statisticMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                statisticMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                statisticMouseExited(evt);
             }
         });
 
@@ -308,7 +317,7 @@ public class MainFrame extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(32, Short.MAX_VALUE))
-            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(statistic, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         kGradientPanel3Layout.setVerticalGroup(
             kGradientPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -330,7 +339,7 @@ public class MainFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(exp, javax.swing.GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(statistic, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(206, 206, 206))
         );
 
@@ -414,7 +423,8 @@ public class MainFrame extends javax.swing.JFrame {
         clicked4 = false;
         clicked5 = false;
         clicked6 = false;
-        setOpaqueLabel(new JLabel[]{cus, imp, exp, prod, prov});
+        clicked7 = false;
+        setOpaqueLabel(new JLabel[]{cus, imp, exp, prod, prov, statistic});
         pn1.setVisible(true);
         pn2.setVisible(false);
         pn0.setVisible(false);
@@ -422,6 +432,7 @@ public class MainFrame extends javax.swing.JFrame {
         pn4.setVisible(false);
         pn5.setVisible(false);
         pn6.setVisible(false);
+        pn7.setVisible(false);
     }//GEN-LAST:event_empMouseClicked
 
     private void empMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_empMouseEntered
@@ -444,7 +455,8 @@ public class MainFrame extends javax.swing.JFrame {
         clicked4 = false;
         clicked5 = false;
         clicked6 = false;
-        setOpaqueLabel(new JLabel[]{emp, imp, exp, prod, prov});
+        clicked7 = false;
+        setOpaqueLabel(new JLabel[]{emp, imp, exp, prod, prov, statistic});
         pn1.setVisible(false);
         pn2.setVisible(true);
         pn0.setVisible(false);
@@ -452,6 +464,8 @@ public class MainFrame extends javax.swing.JFrame {
         pn4.setVisible(false);
         pn5.setVisible(false);
         pn6.setVisible(false);
+        pn7.setVisible(false);
+
     }//GEN-LAST:event_cusMouseClicked
 
     private void cusMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cusMouseEntered
@@ -473,13 +487,16 @@ public class MainFrame extends javax.swing.JFrame {
         clicked4 = false;
         clicked5 = false;
         clicked6 = false;
-        setOpaqueLabel(new JLabel[]{emp, imp, exp, prod, cus});
-        pn3.setVisible(true);
+        clicked7 = false;
+        setOpaqueLabel(new JLabel[]{emp, imp, exp, prod, cus, statistic});
+        pn1.setVisible(false);
         pn2.setVisible(false);
         pn0.setVisible(false);
-        pn1.setVisible(false);
+        pn3.setVisible(true);
         pn4.setVisible(false);
-
+        pn5.setVisible(false);
+        pn6.setVisible(false);
+        pn7.setVisible(false);
     }//GEN-LAST:event_provMouseClicked
 
     private void provMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_provMouseEntered
@@ -501,13 +518,17 @@ public class MainFrame extends javax.swing.JFrame {
         clicked3 = false;
         clicked5 = false;
         clicked6 = false;
-        setOpaqueLabel(new JLabel[]{emp, imp, exp, prov, cus});
-        pn4.setVisible(true);
+        clicked7 = false;
+        setOpaqueLabel(new JLabel[]{emp, imp, exp, prov, cus, statistic});
+        pn1.setVisible(false);
         pn2.setVisible(false);
         pn0.setVisible(false);
-        pn1.setVisible(false);
         pn3.setVisible(false);
-
+        pn4.setVisible(true);
+        pn5.setVisible(false);
+        pn6.setVisible(false);
+        pn7.setVisible(false);
+        pn7.setVisible(false);
     }//GEN-LAST:event_prodMouseClicked
 
     private void prodMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_prodMouseEntered
@@ -530,7 +551,8 @@ public class MainFrame extends javax.swing.JFrame {
         clicked3 = false;
         clicked4 = false;
         clicked6 = false;
-        setOpaqueLabel(new JLabel[]{emp, prod, exp, prov, cus});
+        clicked7 = false;
+        setOpaqueLabel(new JLabel[]{emp, prod, exp, prov, cus, statistic});
         pn1.setVisible(false);
         pn2.setVisible(false);
         pn0.setVisible(false);
@@ -538,6 +560,7 @@ public class MainFrame extends javax.swing.JFrame {
         pn4.setVisible(false);
         pn5.setVisible(true);
         pn6.setVisible(false);
+        pn7.setVisible(false);
     }//GEN-LAST:event_impMouseClicked
 
     private void impMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_impMouseEntered
@@ -559,7 +582,8 @@ public class MainFrame extends javax.swing.JFrame {
         clicked3 = false;
         clicked4 = false;
         clicked5 = false;
-        setOpaqueLabel(new JLabel[]{emp, prod, imp, prov, cus});
+        clicked7 = false;
+        setOpaqueLabel(new JLabel[]{emp, prod, imp, prov, cus, statistic});
         pn1.setVisible(false);
         pn2.setVisible(false);
         pn0.setVisible(false);
@@ -567,6 +591,7 @@ public class MainFrame extends javax.swing.JFrame {
         pn4.setVisible(false);
         pn5.setVisible(false);
         pn6.setVisible(true);
+        pn7.setVisible(false);
     }//GEN-LAST:event_expMouseClicked
 
     private void expMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_expMouseEntered
@@ -579,15 +604,29 @@ public class MainFrame extends javax.swing.JFrame {
         resetColor(exp, clicked6);
     }//GEN-LAST:event_expMouseExited
 
-    private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
-        setClickedColor(exp);
-        clicked6 = true;
+    private void statisticMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_statisticMouseEntered
+        // TODO add your handling code here:
+        setMoveColor(statistic);
+
+    }//GEN-LAST:event_statisticMouseEntered
+
+    private void statisticMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_statisticMouseExited
+        // TODO add your handling code here:
+        resetColor(statistic, clicked7);
+
+    }//GEN-LAST:event_statisticMouseExited
+
+    private void statisticMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_statisticMouseClicked
+        // TODO add your handling code here:
+        setClickedColor(statistic);
+        clicked6 = false;
         clicked1 = false;
         clicked2 = false;
         clicked3 = false;
         clicked4 = false;
         clicked5 = false;
-        setOpaqueLabel(new JLabel[]{emp, prod, imp, prov, cus});
+        clicked7 = true;
+        setOpaqueLabel(new JLabel[]{emp, prod, imp, prov, cus, exp});
         pn1.setVisible(false);
         pn2.setVisible(false);
         pn0.setVisible(false);
@@ -596,7 +635,7 @@ public class MainFrame extends javax.swing.JFrame {
         pn5.setVisible(false);
         pn6.setVisible(false);
         pn7.setVisible(true);
-    }//GEN-LAST:event_jLabel4MouseClicked
+    }//GEN-LAST:event_statisticMouseClicked
 
     private void setClickedColor(JLabel lb) {
         lb.setBackground(new Color(7, 61, 141));
@@ -671,7 +710,6 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
@@ -681,6 +719,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel prod;
     private javax.swing.JLabel prov;
     private javax.swing.JLabel setting;
+    private javax.swing.JLabel statistic;
     // End of variables declaration//GEN-END:variables
 
     public static class FrameDragListener extends MouseAdapter {

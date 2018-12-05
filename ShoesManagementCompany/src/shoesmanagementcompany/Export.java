@@ -53,14 +53,7 @@ import org.apache.poi.xwpf.usermodel.XWPFTableRow;
  * @author Pham Ngoc Minh
  */
 public class Export extends javax.swing.JPanel {
-
-    int click = 0;
-    private static int rowID1 = 0;
-    private static int rowID2 = 0;
-    ConnectionDB connectDB = new ConnectionDB();
-    Connection conn = connectDB.getConnect();
-    PreparedStatement pst = null;
-   
+  public boolean[] inserted = new boolean[100000];
     /**
      * Creates new form Export
      */
@@ -101,27 +94,22 @@ public class Export extends javax.swing.JPanel {
         jScrollPane5 = new javax.swing.JScrollPane();
         tableExport2 = new javax.swing.JTable();
         jToolBar4 = new javax.swing.JToolBar();
+        importFile = new javax.swing.JButton();
         exportFile = new javax.swing.JButton();
         jToolBar5 = new javax.swing.JToolBar();
         viewData = new javax.swing.JButton();
+        clearData = new javax.swing.JButton();
+        insertData = new javax.swing.JButton();
         jToolBar6 = new javax.swing.JToolBar();
+        jButton7 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         employeeName = new javax.swing.JLabel();
         customerName = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         lbExportInvoice = new javax.swing.JLabel();
-        search = new javax.swing.JTextField();
+        jTextField1 = new javax.swing.JTextField();
         jComboBox1 = new javax.swing.JComboBox<>();
-        jButton7 = new javax.swing.JButton();
-        jToolBar1 = new javax.swing.JToolBar();
-        insertData = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
-        clearData = new javax.swing.JButton();
-        jToolBar2 = new javax.swing.JToolBar();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(1150, 710));
@@ -229,7 +217,18 @@ public class Export extends javax.swing.JPanel {
         tableExport2.setRowHeight(25);
         jScrollPane5.setViewportView(tableExport2);
 
+        jToolBar4.setBackground(new java.awt.Color(255, 255, 255));
         jToolBar4.setRollover(true);
+
+        importFile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/shoesmanagementcompany/IconColor/icons8_Microsoft_Excel_37px.png"))); // NOI18N
+        importFile.setToolTipText("Nhập file");
+        importFile.setOpaque(false);
+        importFile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                importFileActionPerformed(evt);
+            }
+        });
+        jToolBar4.add(importFile);
 
         exportFile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/shoesmanagementcompany/IconColor/icons8_Microsoft_Word_37px.png"))); // NOI18N
         exportFile.setToolTipText("Xuất file");
@@ -241,9 +240,10 @@ public class Export extends javax.swing.JPanel {
         });
         jToolBar4.add(exportFile);
 
+        jToolBar5.setBackground(new java.awt.Color(255, 255, 255));
         jToolBar5.setRollover(true);
 
-        viewData.setIcon(new javax.swing.ImageIcon(getClass().getResource("/shoesmanagementcompany/Icon/reset.png"))); // NOI18N
+        viewData.setIcon(new javax.swing.ImageIcon(getClass().getResource("/shoesmanagementcompany/IconColor/icons8_Database_View_37px.png"))); // NOI18N
         viewData.setToolTipText("Hiển thị ");
         viewData.setOpaque(false);
         viewData.addActionListener(new java.awt.event.ActionListener() {
@@ -253,8 +253,41 @@ public class Export extends javax.swing.JPanel {
         });
         jToolBar5.add(viewData);
 
+        clearData.setIcon(new javax.swing.ImageIcon(getClass().getResource("/shoesmanagementcompany/IconColor/icons8_Delete_Database_37px.png"))); // NOI18N
+        clearData.setToolTipText("Xoá bảng");
+        clearData.setFocusable(false);
+        clearData.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        clearData.setOpaque(false);
+        clearData.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        clearData.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clearDataActionPerformed(evt);
+            }
+        });
+        jToolBar5.add(clearData);
+
+        insertData.setIcon(new javax.swing.ImageIcon(getClass().getResource("/shoesmanagementcompany/IconColor/icons8_Add_Database_37px.png"))); // NOI18N
+        insertData.setToolTipText("Thêm");
+        insertData.setOpaque(false);
+        insertData.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                insertDataActionPerformed(evt);
+            }
+        });
+        jToolBar5.add(insertData);
+
         jToolBar6.setBackground(new java.awt.Color(255, 255, 255));
         jToolBar6.setRollover(true);
+
+        jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/shoesmanagementcompany/IconColor/icons8_Combo_Chart_37px.png"))); // NOI18N
+        jButton7.setToolTipText("Thống kê");
+        jButton7.setOpaque(false);
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
+        jToolBar6.add(jButton7);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 102, 255));
@@ -277,138 +310,72 @@ public class Export extends javax.swing.JPanel {
         lbExportInvoice.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lbExportInvoice.setText("Mã hóa đơn xuất");
 
-        search.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jTextField1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
-        jComboBox1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "TK theo mã hóa đơn xuất", "TK theo mã khách hàng", "TK theo mã nhân viên", "TK theo mã sản phẩm", "TK theo ngày xuất hàng" }));
-
-        jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/shoesmanagementcompany/IconColor/icons8_Combo_Chart_37px.png"))); // NOI18N
-        jButton7.setToolTipText("Thống kê");
-        jButton7.setOpaque(false);
-        jButton7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton7ActionPerformed(evt);
-            }
-        });
-
-        jToolBar1.setRollover(true);
-
-        insertData.setIcon(new javax.swing.ImageIcon(getClass().getResource("/shoesmanagementcompany/IconColor/icons8_Add_Database_37px.png"))); // NOI18N
-        insertData.setToolTipText("Thêm");
-        insertData.setOpaque(false);
-        insertData.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                insertDataActionPerformed(evt);
-            }
-        });
-        jToolBar1.add(insertData);
-
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/shoesmanagementcompany/Icon/edit 37.1.png"))); // NOI18N
-        jButton1.setFocusable(false);
-        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-        jToolBar1.add(jButton1);
-
-        clearData.setIcon(new javax.swing.ImageIcon(getClass().getResource("/shoesmanagementcompany/IconColor/icons8_Delete_Database_37px.png"))); // NOI18N
-        clearData.setToolTipText("Xoá bảng");
-        clearData.setFocusable(false);
-        clearData.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        clearData.setOpaque(false);
-        clearData.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        clearData.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                clearDataActionPerformed(evt);
-            }
-        });
-        jToolBar1.add(clearData);
-
-        jToolBar2.setRollover(true);
-
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/shoesmanagementcompany/Icon/insert 37.2.png"))); // NOI18N
-        jButton2.setFocusable(false);
-        jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar2.add(jButton2);
-
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/shoesmanagementcompany/Icon/edit 37.2.png"))); // NOI18N
-        jButton3.setFocusable(false);
-        jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar2.add(jButton3);
-
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/shoesmanagementcompany/Icon/remove 37.2.png"))); // NOI18N
-        jButton4.setFocusable(false);
-        jButton4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton4.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar2.add(jButton4);
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jToolBar4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jToolBar5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(6, 6, 6)
-                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jToolBar2, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton7)
-                .addGap(23, 23, 23)
-                .addComponent(jToolBar6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 141, Short.MAX_VALUE)
-                .addComponent(search, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jLabel21, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel20, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel18, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(34, 34, 34)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(createDay, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
-                            .addComponent(exportInvoice, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(employeeName, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(employeeCombo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel28, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel85, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel89, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel23, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel24, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel86, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel87, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(34, 34, 34)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(exportDay, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
-                            .addComponent(productName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(quantity, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(cost, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(customerName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lbExportInvoice, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(productCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(customerID, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane5)
-                    .addComponent(jScrollPane6))
-                .addGap(10, 10, 10))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jToolBar4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jToolBar5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jToolBar6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(jLabel21, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel20, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel18, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(34, 34, 34)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(employeeCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(createDay, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+                                        .addComponent(exportInvoice, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(employeeName, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel28, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel85, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel89, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel23, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel24, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel86, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel87, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(34, 34, 34)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(exportDay, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+                                    .addComponent(productName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(quantity, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(cost, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(customerID, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(customerName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(productCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lbExportInvoice, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(52, 52, 52)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 676, Short.MAX_VALUE)
+                            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 676, Short.MAX_VALUE))
+                        .addGap(10, 10, 10))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(29, 29, 29)
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
         );
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {cost, createDay, exportDay, quantity});
@@ -416,16 +383,13 @@ public class Export extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jToolBar5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jToolBar4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jToolBar5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jToolBar4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jToolBar6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(search, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jButton7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jToolBar1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jToolBar2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
@@ -482,13 +446,78 @@ public class Export extends javax.swing.JPanel {
                             .addComponent(cost)
                             .addComponent(jLabel87, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addContainerGap())
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 319, Short.MAX_VALUE)))
+                    .addComponent(jScrollPane5)))
         );
 
         layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {cost, customerID, employeeCombo, exportDay, productCombo, quantity});
 
     }// </editor-fold>//GEN-END:initComponents
-   
+
+    private void importFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_importFileActionPerformed
+        // TODO add your handling code here:
+        String path = null;
+        JFileChooser fileChooser = new JFileChooser();
+        // show ra một bảng chọn file
+        int rVal = fileChooser.showOpenDialog(null);
+        // nếu nhấn nút ok (tuỳ chọn APPROVE_OPTION)
+        if (rVal == JFileChooser.APPROVE_OPTION) {
+            String fileName = fileChooser.getSelectedFile().getName();
+            String dir = fileChooser.getCurrentDirectory().toString();
+            path = dir + "\\" + fileName;
+        } // nếu nhấn nút cancel trong bảng
+        else if (rVal == JFileChooser.CANCEL_OPTION) {
+            return;
+        }
+        // chỗ này sẽ delete hết các dòng trước khi nhập dữ liệu từ file
+
+        // vector lưu tên cột
+        Vector columns = new Vector();
+        try {
+            FileInputStream file = new FileInputStream(new File(path));
+            // tạo một file excel
+            XSSFWorkbook workbook = new XSSFWorkbook(file);
+            // tạo một sheet trong excel có số thứ tự là 0
+            XSSFSheet sheet = workbook.getSheetAt(0);
+            // con trỏ duyệt hàng trong excel
+            Iterator<Row> rowIt = sheet.iterator();
+            // nếu vẫn còn dòng trong file
+            while (rowIt.hasNext()) {
+                // tạo một dòng mới
+                Row row = rowIt.next();
+                // con trỏ trỏ vào các ô trong một dòng
+                Iterator<Cell> cellIt = row.cellIterator();
+                // nếu là hàng 0
+                if (row.getRowNum() == 0) {
+                    // add tên các cột vào trong bảng jtable
+                    while (cellIt.hasNext()) {
+                        Cell cell = cellIt.next();
+                        columns.add(cell.getStringCellValue());
+                        ((DefaultTableModel) tableExport1.getModel()).setColumnIdentifiers(columns);
+                    }
+                } else {
+                    //vector chứa dữ liệu trong 1 dòng để add vào bảng jtabel
+                    Vector<String> rowData = new Vector<String>();
+                    // nếu vẫn còn ô tiếp theo
+                    while (cellIt.hasNext()) {
+                        // lấy cell trong bảng excel
+                        Cell cell = cellIt.next();
+                        // nếu cell có kiểu dữ liệu là string
+                        if (cell.getCellType() == CellType.STRING) {
+                            rowData.add(cell.getStringCellValue());
+                        } // nếu cell có kiểu dữ liệu là số
+                        else if (cell.getCellType() == CellType.NUMERIC) {
+                            rowData.add(Double.toString(cell.getNumericCellValue()));
+                        }
+                    }
+                    // add dữ liệu vào trong bảng jtable
+                    ((DefaultTableModel) tableExport1.getModel()).addRow(rowData);
+                }
+            }
+        } catch (FileNotFoundException ex) {
+        } catch (IOException ex) {
+            Logger.getLogger(Employee.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_importFileActionPerformed
     private boolean isEmptyRow(int row) {
         DefaultTableModel tableModel = (DefaultTableModel) tableExport1.getModel();
         for (int i = 0; i < tableExport1.getColumnCount(); i++) {
@@ -522,12 +551,6 @@ public class Export extends javax.swing.JPanel {
             table.removeRow(1);
         }
     }
-
-    private void removeAllRow1() {
-        
-
-    }
-
     private void exportFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportFileActionPerformed
         // TODO add your handling code here:
         try {
@@ -580,23 +603,22 @@ public class Export extends javax.swing.JPanel {
 
     private void viewDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewDataActionPerformed
         // TODO add your handling code here:
-        ConnectionDB connectDB = new ConnectionDB();
-        Connection conn = connectDB.getConnect();
-        DefaultTableModel tableModel = (DefaultTableModel) tableExport1.getModel();
-        DefaultTableModel tableMode2 = (DefaultTableModel) tableExport2.getModel();
 
+        ConnectionDB connectDB = new ConnectionDB();
+        Connection connection = connectDB.getConnect();
+        DefaultTableModel tableModel = (DefaultTableModel) tableExport1.getModel();
         tableModel.setNumRows(0);
-        String sql = "SELECT * FROM quanlybangiay.hoadonxuat";
+        String sql = "SELECT * FROM quanlybangiay.nhanvien";
         PreparedStatement pst;
         int row = 0;
         try {
-            pst = conn.prepareStatement(sql);
+            pst = connection.prepareStatement(sql);
             ResultSet rs = pst.executeQuery();
             while (rs.next()) {
                 tableModel.addRow(new Object[]{rs.getString(1), rs.getString(2),
                     rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9)
                 });
-
+                inserted[row] = true;
                 row++;
             }
             tableExport1.setModel(tableModel);
@@ -613,7 +635,7 @@ public class Export extends javax.swing.JPanel {
         //        DefaultTableModel tableModel = (DefaultTableModel) tableExport1.getModel();
         int rows = tableExport1.getRowCount();
         for (int row = 0; row < rows; row++) {
-         
+            if (!inserted[row] && !isEmptyRow(row)) {
                 String sql = "INSERT INTO quanlybangiay.nhanvien VALUES (?,?,?,?,?,?,?,?,?)";
                 try {
                     connection.setAutoCommit(false);
@@ -635,8 +657,8 @@ public class Export extends javax.swing.JPanel {
                 } catch (HeadlessException | SQLException ex) {
                     JOptionPane.showMessageDialog(null, ex.getMessage());
                 }
-
-            
+                inserted[row] = true;
+            }
         }
         JOptionPane.showMessageDialog(null, "Successfully");
     }//GEN-LAST:event_insertDataActionPerformed
@@ -654,7 +676,7 @@ public class Export extends javax.swing.JPanel {
         // TODO add your handling code here:
         int dialog = JOptionPane.showConfirmDialog(null, "Hành động này sẽ xoá toàn bộ dữ liệu \nBạn có muốn tiếp tục không?\nTip: Nếu bạn không chắc chắn, hãy kiểm tra lại hoặc xoá lần lượt từng hàng một!", "Cảnh báo", JOptionPane.INFORMATION_MESSAGE);
 
-        if (dialog == JOptionPane.YES_OPTION) {
+        if(dialog == JOptionPane.YES_OPTION) {
             ConnectionDB connectionDB = new ConnectionDB();
             Connection con = connectionDB.getConnect();
 
@@ -675,10 +697,6 @@ public class Export extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_costActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton clearData;
@@ -691,11 +709,8 @@ public class Export extends javax.swing.JPanel {
     private javax.swing.JTextField exportDay;
     private javax.swing.JButton exportFile;
     private javax.swing.JTextField exportInvoice;
+    private javax.swing.JButton importFile;
     private javax.swing.JButton insertData;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton7;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
@@ -713,8 +728,7 @@ public class Export extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel89;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
-    private javax.swing.JToolBar jToolBar1;
-    private javax.swing.JToolBar jToolBar2;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JToolBar jToolBar4;
     private javax.swing.JToolBar jToolBar5;
     private javax.swing.JToolBar jToolBar6;
@@ -722,7 +736,6 @@ public class Export extends javax.swing.JPanel {
     private javax.swing.JComboBox<String> productCombo;
     private javax.swing.JLabel productName;
     private javax.swing.JTextField quantity;
-    private javax.swing.JTextField search;
     public javax.swing.JTable tableExport1;
     public javax.swing.JTable tableExport2;
     private javax.swing.JButton viewData;
